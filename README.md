@@ -10,7 +10,32 @@ to prove the testbench catches real defects, and coverage-hole analysis.
 
 ## Architecture
 
-```mermaid flowchart LR subgraph ENV["fcs_env"] VSQR["virtual sequencer"] IN["AXIS master agent<br/>seqr / driver / monitor"] OUT["AXIS sink agent<br/>TREADY driver / monitor"] APB["APB agent<br/>seqr / driver / monitor"] RAL["RAL model<br/>+ adapter + predictor"] REF["Reference model<br/>table-driven CRC-32"] SB["Scoreboard"] COV["Coverage"] end DUT[["axis_fcs_inserter<br/>+ bound SVA"]] IN -->|s_axis| DUT DUT -->|m_axis| OUT APB -->|APB| DUT IN -.->|frames| REF REF --> SB OUT -.->|frames| SB IN -.-> COV OUT -.-> COV APB -.-> RAL RAL -.->|"CTRL.EN"| REF VSQR --> IN VSQR --> RAL ```
+```mermaid 
+flowchart LR
+  subgraph ENV["fcs_env"]
+    VSQR["virtual sequencer"]
+    IN["AXIS master agent<br/>seqr / driver / monitor"]
+    OUT["AXIS sink agent<br/>TREADY driver / monitor"]
+    APB["APB agent<br/>seqr / driver / monitor"]
+    RAL["RAL model<br/>+ adapter + predictor"]
+    REF["Reference model<br/>table-driven CRC-32"]
+    SB["Scoreboard"]
+    COV["Coverage"]
+  end
+  DUT[["axis_fcs_inserter<br/>+ bound SVA"]]
+  IN -->|s_axis| DUT
+  DUT -->|m_axis| OUT
+  APB -->|APB| DUT
+  IN -.->|frames| REF
+  REF --> SB
+  OUT -.->|frames| SB
+  IN -.-> COV
+  OUT -.-> COV
+  APB -.-> RAL
+  RAL -.->|"CTRL.EN"| REF
+  VSQR --> IN
+  VSQR --> RAL
+```
 
 ## DUT summary
 | Address | Register | Access | Description |
